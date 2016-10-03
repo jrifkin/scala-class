@@ -24,15 +24,22 @@ object Dependencies {
   // http://www.scala-sbt.org/0.13/docs/Library-Dependencies.html#The++key
 
   // Task 5e
-  val breezeVersion: String = ???
+  val breezeVersion: String = "0.12"
 
   // Task 5d
-  lazy val commonDependencies: Seq[ModuleID] = ???
+  lazy val commonDependencies: Seq[ModuleID] = Seq(
+    "org.scalanlp" %% "breeze" % breezeVersion,
+    "org.scalanlp" %% "breeze-natives" % breezeVersion,
+    kindProjector,
+    si2712
+  )
 
   // Separate "common dependencies" from "plotting dependencies"
   // Do not write the same Maven artifact twice
 
   // Task 5d
-  lazy val plottingDependencies: Seq[ModuleID] = ???
+  lazy val plottingDependencies: Seq[ModuleID] = Seq(
+    "org.scalanlp" %% "breeze-viz" % breezeVersion
+  )
 
 }

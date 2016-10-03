@@ -9,7 +9,21 @@
 
 // Task 5h
 
+lazy val root = (project in file(".")).
+  settings(name := "hello",
+    version := Common.commonSettings.version
+	).aggregate(distributions,plotting)
 
+lazy val distributions = (project in file("distributions")).
+  	settings(
+    	name := "distributions"
+  	).settings(Common.commonSettings:_*)
+
+lazy val plotting = (project in file("plotting")).
+	settings(
+		name := "plotting",
+	    libraryDependencies ++= Dependencies.plottingDependencies
+	).settings(Common.commonSettings:_*).dependsOn(distributions)
 
 
 
