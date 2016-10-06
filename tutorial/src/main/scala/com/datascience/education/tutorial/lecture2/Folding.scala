@@ -28,6 +28,9 @@ object Folding {
   def myToString3[A](list: List[A]) =
     foldRight[A,String](list,"Nil")(foo2)
 
+  def myToString3Printer[A](list:List[A])=
+    foldRightPrinter[A,String](list,"Nil")(foo2)
+
   myToString3(List(1,2,3,4,5))
 
   // verbose
@@ -83,6 +86,8 @@ object Folding {
 
   foldLeftPrinter(List(1,2,3,4),"Nil")(foo4)
 
+  def myToString4Printer[A](list: List[A]) = 
+    foldLeftPrinter[A,String](list, "Nil")(foo4(_,_))
 
   @annotation.tailrec
   def tailRecursive(i: Int): Int =
@@ -136,7 +141,7 @@ object Folding {
     val tuple: (Double, Int) =
       list.foldLeft[(Double,Int)]((0.0, 0)){
         case ((sum: Double, count: Int), next: Double) =>
-          ???
+          (sum + next, count + 1)
       }
 
     tuple._1 / tuple._2
@@ -150,25 +155,47 @@ object Folding {
   // TASK 3b
 
   def contains[A](list: List[A], item: A): Boolean =
-    list.foldLeft(???)(???)
+    list.foldLeft(false)((b,a) =>  (item == a) || b )
 
 
   // contains(List(1,2,3,4),4)
 
 
   //  TASK 3c
-  def last[A](list: List[A]): A = list.foldLeft[A](???)(???)
+
+// def
+// foldLeft[B](z: B)(op: (B, A) ⇒ B): B
+  def last[A](list: List[A]): A = 
+    list.foldLeft[A](list.head)((b: A , a: A) => a)
 
 
 
   // last(List(1,2,3,4))
 
 
+  // I know I want something to end up with the next to last item and the last item
+
+  //.tail returns a list of everything minus the head
+  //.tail.head = the second element in the fold
+  // z is a tuple
+  // x is A
 
   // TASK 3d
-  def penultimate[A](list: List[A]): A = ???
-    // list.foldLeft( (???, ???) )((???, ???) => ??? )//???
+  def penultimate[A](list: List[A]): A = 
+    list.foldLeft[Tuple2[A,A]]((list.head, list.tail.head)){
+      (z:Tuple2[A,A],x:A) => {
+        println(s"tup $z  a $x")
+        (z._2,x)
+      } 
+      }._1
 
+  def penultimateInt(list: List[Int]): Int = 
+    list.foldLeft[Tuple2[Int,Int]]((888, 999)){
+      (z:Tuple2[Int,Int],x:Int) => {
+        println(s"tup $z  a $x")
+        (z._2,x)
+      } 
+      }._1
   // List(1,2,3,4).tail.head // hint- use (list.head, list.tail.head)  as the initial value
   // val a = (2,3)
   // a._1

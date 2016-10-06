@@ -39,7 +39,7 @@ object Common {
   // Task 5a and Task 5g
   lazy val commonSettings: Seq[Def.Setting[_]] = Seq(
     version := "0.1.0",
-    Dependencies.commonDependencies,
+    libraryDependencies ++= Dependencies.commonDependencies,
     resolvers ++= otherResolvers,
     organization := "com.datascience.education",
     scalacOptions ++= Seq("-unchecked","-deprecation","-feature")

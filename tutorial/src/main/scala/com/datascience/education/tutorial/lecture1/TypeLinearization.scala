@@ -15,7 +15,8 @@ object TypeLinearization {
   }
 
   // Task (3a)
-  class Frog
+  class Frog extends Amphibian with Philosophical {
+  }
 
 }
 
@@ -25,7 +26,7 @@ object TypeLinearizationExample extends App {
 
   val kermit = new Frog
 
-  println(kermit)
+  println(kermit.toString)
 
 }
 
