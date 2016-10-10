@@ -195,7 +195,7 @@ object Folding {
         println(s"tup $z  a $x")
         (z._2,x)
       } 
-      }._1
+    }._1
   // List(1,2,3,4).tail.head // hint- use (list.head, list.tail.head)  as the initial value
   // val a = (2,3)
   // a._1
@@ -203,16 +203,37 @@ object Folding {
 
 
   // TASK 3e
-  def average3(list: List[Double]): Double = ???
-    // list match {
-    //    ???
-    // }
+  def average3(list: List[Double]): Unit = 
+      list match {
+        //the case when the list is not empty, initial values are the head object and an initial count of
+        // 1.0
+       case head :: tail => tail.foldLeft[Tuple2[Double,Double]]((head,1.0)) { 
+        // r._1 is the accumulating average while r._2 contains the count thus far, and c is the newest val
+        // implement the cummulative moving average
+        (result:Tuple2[Double,Double],next:Double) => {
+          // println(result)
+          // println(next)
+          //   println(( (result._1 + (next/result._2)) * result._2 / (result._2 + 1), result._2 + 1 ))
+              ( (result._1 + (next/result._2)) * result._2 / (result._2 + 1), result._2 + 1 )
+          }
+        }._1
+        //the case when the list is empty
+       case Nil => println("Empty List")
+    }
   
   // average3(List(1,2,3,4))
 
+  // def penultimateInt(list: List[Int]): Int = 
+  //   list.foldLeft[Tuple2[Int,Int]]((888, 999)){
+  //     (z:Tuple2[Int,Int],x:Int) => {
+  //       println(s"tup $z  a $x")
+  //       (z._2,x)
+  //     } 
+  //   }._1
+
 
   // TASK 3f
-  def kthLast[A](l: List[A], k: Int) = {
+  def kthLast[A](l: List[A], k: Int): A = {
     ???
     l.foldRight(???)(???)//.???
   }
