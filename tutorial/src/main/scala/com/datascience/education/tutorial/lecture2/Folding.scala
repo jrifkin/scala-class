@@ -208,12 +208,11 @@ object Folding {
         //the case when the list is not empty, initial values are the head object and an initial count of
         // 1.0
        case head :: tail => tail.foldLeft[Tuple2[Double,Double]]((head,1.0)) { 
-        // r._1 is the accumulating average while r._2 contains the count thus far, and c is the newest val
-        // implement the cummulative moving average
+        // result._1 is the accumulating average while result._2 contains the count thus far, and 
+        // next is the newest val implement the cummulative moving average
         (result:Tuple2[Double,Double],next:Double) => {
           // println(result)
           // println(next)
-          //   println(( (result._1 + (next/result._2)) * result._2 / (result._2 + 1), result._2 + 1 ))
               ( (result._1 + (next/result._2)) * result._2 / (result._2 + 1), result._2 + 1 )
           }
         }._1
@@ -242,27 +241,35 @@ object Folding {
 
   // TASK 3g
   def passThrough[A](list: List[A]): List[A] =
-    ???
+    list.foldLeft(List[A]()){ (accumulator:List[A], item:A) =>
+      item :: accumulator
+    }.reverse
 
   // TASK 3h
   //curly braces are ok for function literals
   def mapViaFoldLeft[A,B](list: List[A], f: A => B): List[B] =
-    ???
+    list.foldLeft(List[B]()){ (accumulator:List[B],item:A) =>
+      f(item) :: accumulator
+    }.reverse
 
   val l3 = (0 to 5).toList
 
   // mapViaFoldLeft(l3,(a: Int) => a*2)
 
   // TASK 3i
-  def unique[A](list: List[A]): List[A] =
-    ???
-
   // unique(List(2,3,2,3,2,3,1,4))
-  List(1,2,3).contains(2) //hint- use contains
+  // List(1,2,3).contains(2) //hint- use contains
 
+  def unique[A](list: List[A]): List[A] =
+    list.foldLeft(List[A]()){ (accumulator:List[A], item:A) =>
+      if (accumulator.contains(item)) accumulator else item :: accumulator
+    }.reverse
+
+  
   // TASK 3j
   def double[A](list: List[A]): List[A] =
-    ???
+    list.foldLeft(List[A]())((accumulator:List[A],item:A) => 
+      item :: item :: accumulator).reverse
   
 
   // TASK 3k
@@ -271,7 +278,12 @@ object Folding {
   l4.partition(_ > 2)
 
   def stackSort[A : Ordering](list: List[A]): List[A] =
-    ???
+    list.foldLeft(List[A]()){
+      (ordered: List[A], item: A) => {
+        ???
+        // item :: ordered.partition(_< item)._2 ::: ordered.partition(_< item)._1
+      }
+    }.reverse
 
 
   val l5 = List(9,3,4,2,6,4,8,1,5,63)
