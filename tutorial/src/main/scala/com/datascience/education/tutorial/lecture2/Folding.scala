@@ -277,13 +277,18 @@ object Folding {
   val l4 = List(1,2,3) ::: List(4,5,6)
   l4.partition(_ > 2)
 
+  // def stackSort[A](list: List[A])(implicit x: Ordering[A])
+
   def stackSort[A : Ordering](list: List[A]): List[A] =
     list.foldLeft(List[A]()){
       (ordered: List[A], item: A) => {
-        ???
-        // item :: ordered.partition(_< item)._2 ::: ordered.partition(_< item)._1
+        val (front, back) = ordered.partition(Ordering[A].lt(_, item))
+        // println(item)
+        // println(back)
+        // println(front)
+        front ::: item :: back
       }
-    }.reverse
+    }
 
 
   val l5 = List(9,3,4,2,6,4,8,1,5,63)
@@ -296,15 +301,17 @@ object Folding {
 
   def updateDiffs(tup: (Int, Int, Int), x: Int): (Int, Int, Int) =
     tup match {
-      case (mn, mx, diff) if ??? => ??? // a new low
-      case (mn, mx, diff) if ??? => ??? // a new high
-      case _ => ???  // element x was not higher or lower than elements previously encountered.  Maximum difference remains the same.
+      case (mn, mx, diff) if (tup._1 > x) => (x, mx, mx-x) // a new low
+      case (mn, mx, diff) if (tup._2 < x) => (mn, x, x-mn) // a new high
+      case _ => tup  // element x was not higher or lower than elements previously encountered.  Maximum difference remains the same.
     }
   
 
   def maxDifference(list: List[Int]): Int = list match {
     case Nil => -1
-    case head :: tail => ???
+    case head :: tail => list.foldLeft[Tuple3[Int,Int,Int]]((1000, -1000, -1)){
+      (z:Tuple3[Int,Int,Int],x:Int) => updateDiffs(z,x)
+    }._3
   }
 
   // maxDifference(List(2,3,10,2,4,8,1))
