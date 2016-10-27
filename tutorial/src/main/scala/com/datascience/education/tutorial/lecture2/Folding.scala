@@ -309,7 +309,7 @@ object Folding {
 
   def maxDifference(list: List[Int]): Int = list match {
     case Nil => -1
-    case head :: tail => list.foldLeft[Tuple3[Int,Int,Int]]((1000, -1000, -1)){
+    case head :: tail => list.foldLeft[Tuple3[Int,Int,Int]]((head, head, -1)){
       (z:Tuple3[Int,Int,Int],x:Int) => updateDiffs(z,x)
     }._3
   }

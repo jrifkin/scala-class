@@ -87,7 +87,12 @@ object Sudoku {
 
    Check that each column satisfies this requirement.
    */
-  def checkY(board: List[(Int,Int)], next: (Int,Int)): Boolean = ???
+  def checkY(board: List[(Int,Int)], next: (Int,Int)): Boolean = {
+    def check(b: Boolean, tuple: (Int,Int)): Boolean = {
+      b && ((column(tuple) == column(next) && tuple._2 != next._2) || column(tuple) != column(next))
+    }
+    board.foldLeft(true)(check)
+  }
 
   /*
    TASK 1b
@@ -98,19 +103,37 @@ object Sudoku {
    As with each row and each column of the board,
    each tile must contain only one copy of each digit 1-9.
 
+   remember that the list of tuples represents the flattened coordinate 
+   and the value
+
    */
-  def checkT(board: List[(Int,Int)], next: (Int,Int)): Boolean = ???
+  def checkT(board: List[(Int,Int)], next: (Int,Int)): Boolean = {
+    def check(b: Boolean, tuple:(Int,Int)): Boolean = {
+      b && ((tile(tuple)==tile(next) && tuple._2 != next._2) || tile(tuple) != tile(next))
+    }
+    board.foldLeft(true)(check)
+  }
   /*
    TASK 1c
    check that a given position has not been filled
    */
-  def notPlayed(board: List[(Int,Int)], index: Int): Boolean = ???
+  def notPlayed(board: List[(Int,Int)], index: Int): Boolean = {
+    def check(b:Boolean, tuple:(Int,Int)): Boolean = {
+      b && (tuple._1 != index)
+    }
+    board.foldLeft(true)(check)
+  }
 
   /*
    TASK 1d
    check that a given position is legal with respect to checkX, checkY, checkT
    */
-  def isLegal(board: List[(Int,Int)], next: (Int,Int)): Boolean = ???
+  def isLegal(board: List[(Int,Int)], next: (Int,Int)): Boolean = {
+    def check(b: Boolean, tuple:(Int,Int)): Boolean = {
+      b && (checkX(board,next) && checkY(board,next) && checkT(board,next) && notPlayed(board,next._1))
+    }
+    board.foldLeft(true)(check)
+  }
 
   //recursively provide all solutions to puzzle w/ given initial conds
   def sudokuSolve(initial: List[(Int,Int)]): Set[List[(Int,Int)]] = {
@@ -122,8 +145,15 @@ object Sudoku {
     /*
      TASK 1e
      */
-    def sudokuIter(indices: List[Int]): Set[List[(Int,Int)]] = ???
+    def sudokuIter(indices: List[Int]): Set[List[(Int,Int)]] =  (cell) match{
+      //case when nothing left to solve, do nothing
+      case indices.length /*Nil*/ == 0 => ??? //return board
+      
+      //case when a blank spot is found, need to find legal move
+      case indices > -1 => ??? //needs to update the sequence with an answer and call itself
 
+    }
+    // need a way to combine the initial list with the indice guessed list
     sudokuIter(indices)
   }
 
