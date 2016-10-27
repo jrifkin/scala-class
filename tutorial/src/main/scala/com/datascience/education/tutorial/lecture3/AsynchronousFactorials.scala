@@ -36,7 +36,7 @@ object AsynchronousFactorialsExample extends App {
   val fut10 = printFactorial(10)
   val fut20 = printFactorial(20)
 
-  (1 to 30).foreach(i => {Thread.sleep(500); println(s"unrelated: $i")})
+
 
 }
 
@@ -48,10 +48,14 @@ object FactorialWriter {
 
   // Task (1a)
 
-  // type Logged[A] = ???
+  type Logged[A] = Writer[Vector[String],A]
 
   // Task (1b)
-  // def factorial(n: Int): ??? = ???
+  def factorial(n: Int): Int = {
+    ???
+    // val fact = if (n==0) Logged(Vector("hit bottom"),1) else n*factorial(n-1)
+
+  }
 
 
   // Task 1c

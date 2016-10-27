@@ -67,10 +67,10 @@ object DatabaseQueriesAndUpdates {
 
 
   // Task 2a
-  // type DatabaseReader[A] = ???
+  type DatabaseReader[B] = Reader[Database, B]
 
   // Task 2b
-  // def findUsername(userId: Int): ??? = ???
+  // def findUsername(userId: Int): DatabaseReader[String] = DatabaseReader.apply[???]()
 
 
   // Task 2c
