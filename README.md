@@ -1,3 +1,6 @@
+# Jake Rifkin's Travis
+[![Build Status](https://travis-ci.org/jrifkin/scala-class.svg?branch=master)](https://travis-ci.org/jrifkin/scala-class)
+
 # Functional Scala for Data Engineers
 
 A fast-paced introduction to Scala's FP ecosystem for data engineers. 
